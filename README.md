@@ -2,10 +2,11 @@
 The material is based on the [Stardew Valley](https://stardewvalleywiki.com/Animals#Cat_or_Dog)
 which is a well known business simulation game.
 
-### prerequisite
- - Java 21
+### Preview
+![preview.gif](doc/preview.gif)
 
-[preview.mp4](doc/preview.mp4)
+### Prerequisite
+- Java 21
 
 There are currently four types of cat skins.
 
