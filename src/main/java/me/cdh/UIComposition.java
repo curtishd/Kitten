@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
+import java.util.random.RandomGenerator;
 
 import static java.lang.Math.*;
 
@@ -58,7 +59,6 @@ public final class UIComposition {
         setVisible(true);
         add(new Kitty());
     }};
-    private static final Random ran = new Random();
     private final Map<String, List<BufferedImage>> frames = Loader.loadImg(EnumSet.allOf(Action.class));
     private final Map<String, List<BufferedImage>> bubbleFrames = Loader.loadImg(EnumSet.allOf(BubbleState.class));
     private int frameNum = 0;
@@ -77,15 +77,15 @@ public final class UIComposition {
     }
 
     void tryWander() {
-        if (ran.nextBoolean()) return;
+        if (RandomGenerator.getDefault().nextBoolean()) return;
         state = State.WANDER;
         var screenLoc = window.getLocationOnScreen();
         Point loc;
         do {
             var screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            loc = new Point(ran.nextInt(
+            loc = new Point(RandomGenerator.getDefault().nextInt(
                     screenSize.width - window.getWidth() - 20) + 10,
-                    ran.nextInt(screenSize.height - window.getHeight() - 20) + 10
+                    RandomGenerator.getDefault().nextInt(screenSize.height - window.getHeight() - 20) + 10
             );
         } while (abs(screenLoc.y - loc.y) <= 400 && abs(screenLoc.x - loc.x) <= 400);
         wanderLoc = loc;
@@ -136,7 +136,7 @@ public final class UIComposition {
                 if ((animationSteps - action.delay()) > 40) {
                     animationSteps = 0;
                     frameNum = 0;
-                    var ignored = ran.nextBoolean() ? changeAction(Action.CURLED) : changeAction(Action.SLEEP);
+                    var ignored = RandomGenerator.getDefault().nextBoolean() ? changeAction(Action.CURLED) : changeAction(Action.SLEEP);
                 }
             } else if (action == Action.SITTING && frameNum == action.frame() - 1) {
                 changeAction(Action.LICKING);
@@ -200,7 +200,7 @@ public final class UIComposition {
             } else if (action == Action.RIGHT) {
                 layingDir = Direction.RIGHT;
             } else if (state != State.WANDER && (action == Action.UP || action == Action.DOWN))
-                flag = ran.nextInt(3) >= 1
+                flag = RandomGenerator.getDefault().nextInt(3) >= 1
                         ? changeAction(Action.LAYING) : changeAction(Action.SITTING);
             if (flag) frameNum = 0;
         }
