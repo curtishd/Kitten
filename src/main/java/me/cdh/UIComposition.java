@@ -208,7 +208,7 @@ public final class UIComposition {
 
     static boolean isDayTime() {
         var time = LocalDateTime.now().getHour();
-        return time > 7 && time < 22;
+        return time > 7 && time < 18;
     }
     // ---------------------GET-----------------------
     public List<BufferedImage> getCurrFrames() {

@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.*;
 
-public record Loader() {
+public class Loader {
     static <T extends Enum<T> & Animate> Map<String, List<BufferedImage>> loadImg(EnumSet<T> entries) {
         var stateFramesMap = new HashMap<String, List<BufferedImage>>();
         var ran = new Random();
