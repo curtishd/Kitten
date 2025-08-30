@@ -1,0 +1,33 @@
+{
+   "bin": {"kat": "jdeploy-bundle/jdeploy.js"},
+   "author": "",
+   "description": "Desktop pet kitten application",
+   "main": "index.js",
+   "preferGlobal": true,
+   "repository": "https://github.com/shannah/Kitten.git",
+   "version": "1.0.0",
+   "jdeploy": {
+      "jdk": false,
+      "javaVersion": "21",
+      "jar": "build/libs/Kat-1.0.jar",
+      "javafx": false,
+      "title": "Kitten Desktop Pet",
+      "buildCommand": [
+         "./gradlew",
+         "buildExecutableJar"
+      ],
+      "downloadPage": {"platforms": ["all"]},
+      "generateLegacyBundles": false
+   },
+   "dependencies": {
+      "command-exists-promise": "^2.0.2",
+      "node-fetch": "2.6.7",
+      "tar": "^4.4.8",
+      "yauzl": "^2.10.0",
+      "shelljs": "^0.8.4"
+   },
+   "license": "ISC",
+   "name": "kat",
+   "files": ["jdeploy-bundle"],
+   "scripts": {"test": "echo \"Error: no test specified\" && exit 1"}
+}

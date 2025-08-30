@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "2.2.0"
+    application
 }
 
 group = "me.cdh"
@@ -22,19 +23,38 @@ kotlin {
     jvmToolchain(21)
 }
 
+application {
+    mainClass.set("me.cdh.MainKt")
+}
+
 tasks.register<Copy>("copyDependencies") {
-    into(layout.buildDirectory.dir("libs"))
     from(configurations.runtimeClasspath)
+    into(layout.buildDirectory.dir("libs/lib"))
+}
+
+tasks.jar {
+    dependsOn("copyDependencies")
+    manifest {
+        attributes(
+            "Main-Class" to "me.cdh.MainKt",
+            "Class-Path" to configurations.runtimeClasspath.get().joinToString(" ") { "lib/" + it.name }
+        )
+    }
+}
+
+tasks.register("buildExecutableJar") {
+    dependsOn("jar")
+    description = "Build executable JAR with dependencies for jDeploy"
 }
 
 tasks.withType<KotlinCompile> {
     compilerOptions {
-        destinationDirectory.set(file("$buildDir/classes/kotlin/main"))
+        destinationDirectory.set(layout.buildDirectory.dir("classes/kotlin/main"))
     }
 }
 
 tasks.withType<JavaCompile> {
-    destinationDirectory.set(file("$buildDir/classes/kotlin/main"))
+    destinationDirectory.set(layout.buildDirectory.dir("classes/kotlin/main"))
 }
 
 tasks.named("compileJava", JavaCompile::class.java) {
